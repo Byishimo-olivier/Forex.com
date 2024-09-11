@@ -1,0 +1,94 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('IMAGE/Forex.jpeg') no-repeat center center/cover;
+    padding: 150px 0;
+    color: #fff;
+    position: relative;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+}
+
+/* Currency Converter Form */
+.converter-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-image: url('IMAGE/ofs.jpg');
+}
+
+.converter-form label {
+    font-weight: bold;
+}
+
+.converter-form .btn {
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+/* Contact Form Section */
+.contact-section {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+.contact-section h2 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-form label {
+    font-weight: bold;
+}
+
+.contact-form .btn {
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+
+    .contact-form {
+        padding: 20px;
+    }
+}

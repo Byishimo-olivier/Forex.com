@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Bureau</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap -->
+    <link rel="stylesheet" href="Style.css"> <!-- Link to your custom CSS file -->
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Forex Bureau</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="exchange.html">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="rates.html">Rates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Currency Converter Form -->
+    <header class="hero-section text-white text-center">
+        <div class="container">
+            <h1 class="display-4">Welcome to Forex Bureau</h1>
+            <p class="lead">Easily convert currencies at competitive rates.</p>
+            
+            <!-- Currency Converter Form -->
+            <form id="converter-form" class="converter-form bg-light p-4 rounded shadow">
+                <div class="form-group">
+                    <label for="fromCurrency">From:</label>
+                    <select id="fromCurrency" class="form-control">
+                        <!-- Currency options -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="toCurrency">To:</label>
+                    <select id="toCurrency" class="form-control">
+                        <!-- Currency options -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Convert</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Display Section for Converted Amount -->
+    <section id="conversion-result-section" class="mt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h2>Converted Amount</h2>
+                        </div>
+                        <div class="card-body">
+                            <p id="converted-amount" class="text-center font-weight-bold" style="font-size: 0.5rem;"></p>
+                        </div>
+                        <div id="result" class="mt-4 text-dark"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- jQuery -->
+    <script src="Forex.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
