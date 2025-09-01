@@ -1,73 +1,1251 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forex Bureau</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap -->
-    <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS file -->
+    <title>ForexPro - Contact Us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body{
-            background-image: url(IMAGE/FXCA.jpg);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .background-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="grad2"><stop offset="0%" stop-color="rgba(0,123,255,0.1)"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23grad1)"/><circle cx="800" cy="300" r="200" fill="url(%23grad2)"/><circle cx="400" cy="700" r="180" fill="url(%23grad1)"/><circle cx="900" cy="800" r="120" fill="url(%23grad2)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+            75% { transform: translateY(-30px) rotate(270deg); }
+        }
+
+        /* Custom Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            color: white !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 0 4rem;
+            min-height: 100vh;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .section-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Contact Cards Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Contact Form Card */
+        .contact-form-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .contact-form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+        }
+
+        .contact-form-card h3 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-form-card p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        /* Floating Label Effect */
+        .floating-label {
+            position: relative;
+        }
+
+        .floating-label .form-control {
+            padding-top: 1.5rem;
+        }
+
+        .floating-label label {
+            position: absolute;
+            left: 1.25rem;
+            top: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #666;
+        }
+
+        .floating-label .form-control:focus + label,
+        .floating-label .form-control:not(:placeholder-shown) + label {
+            top: 0.25rem;
+            font-size: 0.8rem;
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        /* Contact Info Card */
+        .contact-info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInRight 1s ease;
+            height: fit-content;
+        }
+
+        .contact-info-card h3 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 123, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .contact-item:hover {
+            background: rgba(0, 123, 255, 0.1);
+            transform: translateX(10px);
+            border-left-color: #007bff;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h5 {
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .contact-details p {
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .contact-details a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: #0056b3;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
+            color: white;
+        }
+
+        /* Map Section */
+        .map-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .map-section h3 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #dee2e6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23007bff" opacity="0.3"/><circle cx="30" cy="30" r="1" fill="%2300d4ff" opacity="0.5"/><circle cx="70" cy="40" r="1.5" fill="%23007bff" opacity="0.4"/><circle cx="60" cy="70" r="1" fill="%2300d4ff" opacity="0.3"/></svg>');
+            animation: mapDots 8s ease-in-out infinite;
+        }
+
+        @keyframes mapDots {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .map-placeholder div {
+            text-align: center;
+            color: #666;
+            z-index: 2;
+            position: relative;
+        }
+
+        .map-placeholder i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 9999;
+            display: none;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPop 0.6s ease;
+        }
+
+        @keyframes successPop {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .success-message h4 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 9998;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Working Hours */
+        .working-hours {
+            background: rgba(0, 123, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .working-hours h6 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .hours-day {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .hours-time {
+            color: #666;
+        }
+
+        /* Emergency Contact */
+        .emergency-contact {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .emergency-contact h6 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .emergency-contact p {
+            margin: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .emergency-contact .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .emergency-contact .btn:hover {
+            background: white;
+            color: #dc3545;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-form-card,
+            .contact-info-card,
+            .map-section {
+                padding: 2rem;
+            }
+            
+            .contact-grid {
+                gap: 1.5rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
+    <!-- Animated Background -->
+    <div class="background-container"></div>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Forex Bureau</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="exchange.html">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="rates.html">Rates</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <i class="fas fa-exchange-alt me-2"></i>ForexPro
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="exchange.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rates.html">Rates</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-
-    <!-- Contact Form Section -->
+    <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
-            <h2 class="text-center mb-4">Get in Touch</h2>
-            <form id="contact-form" class="contact-form bg-light p-4 rounded shadow">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h1><i class="fas fa-comments me-3"></i>Get in Touch</h1>
+                <p>Have questions about our services? Need help with currency exchange? Our expert team is here to assist you 24/7.</p>
+            </div>
+
+            <!-- Contact Grid -->
+            <div class="contact-grid">
+                <!-- Contact Form Card -->
+                <div class="contact-form-card">
+                    <h3><i class="fas fa-paper-plane me-2"></i>Send us a Message</h3>
+                    <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+                    
+                    <form id="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group floating-label">
+                                    <input type="text" class="form-control" id="name" placeholder=" " required>
+                                    <label for="name"><i class="fas fa-user me-1"></i>Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group floating-label">
+                                    <input type="email" class="form-control" id="email" placeholder=" " required>
+                                    <label for="email"><i class="fas fa-envelope me-1"></i>Email Address</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group floating-label">
+                                    <input type="tel" class="form-control" id="phone" placeholder=" ">
+                                    <label for="phone"><i class="fas fa-phone me-1"></i>Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inquiry-type"><i class="fas fa-list me-1"></i>Inquiry Type</label>
+                                    <select class="form-control" id="inquiry-type" required>
+                                        <option value="">Select inquiry type</option>
+                                        <option value="rates">Exchange Rates</option>
+                                        <option value="account">Account Setup</option>
+                                        <option value="transfer">Money Transfer</option>
+                                        <option value="business">Business Services</option>
+                                        <option value="support">Technical Support</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group floating-label">
+                            <input type="text" class="form-control" id="subject" placeholder=" " required>
+                            <label for="subject"><i class="fas fa-tag me-1"></i>Subject</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-comment me-1"></i>Message</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Tell us more about your inquiry..." required></textarea>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="newsletter">
+                            <label class="form-check-label" for="newsletter">
+                                I'd like to receive updates about exchange rates and services
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info Card -->
+                <div class="contact-info-card">
+                    <h3><i class="fas fa-info-circle me-2"></i>Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Our Location</h5>
+                            <p>KG 500 Street, Kicukiro<br>
+                            Kigali, Rwanda<br>
+                            P.O. Box 1234</p>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Phone Numbers</h5>
+                            <p><a href="tel:+250783227490">+250 783 227 490</a><br>
+                            <a href="tel:+250783227490">+250 987 654 321</a><br>
+                            <small>24/7 Customer Support</small></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Email Addresses</h5>
+                            <p><a href="mailto:oliverbyo34@gmail.com">info@forexpro.rw</a><br>
+                            <a href="mailto:oliverbyo34@gmail.com">support@forexpro.rw</a><br>
+                            <a href="mailto:oliverbyo34@gmail.com">business@forexpro.rw</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Website & Social</h5>
+                            <p><a href="https://forexpro.rw" target="_blank">www.forexpro.rw</a><br>
+                            Follow us on social media</p>
+                        </div>
+                    </div>
+
+                    <!-- Working Hours -->
+                    <div class="working-hours">
+                        <h6><i class="fas fa-clock me-2"></i>Working Hours</h6>
+                        <div class="hours-item">
+                            <span class="hours-day">Monday - Friday</span>
+                            <span class="hours-time">8:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">9:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Sunday</span>
+                            <span class="hours-time">10:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="emergency-contact">
+                        <h6><i class="fas fa-exclamation-triangle me-2"></i>Emergency Contact</h6>
+                        <p>For urgent currency exchange needs outside business hours</p>
+                        <p><strong>+250 783 227 490</strong></p>
+                        <a href="tel:+250783227490" class="btn">
+                            <i class="fas fa-phone me-2"></i>Call Now
+                        </a>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+            </div>
+
+            <!-- Map Section -->
+            <div class="map-section">
+                <h3><i class="fas fa-map me-2"></i>Find Us on the Map</h3>
+                <div class="map-placeholder">
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h5>Interactive Map</h5>
+                        <p>Click to view our location on Google Maps</p>
+                        <button class="btn btn-primary mt-2" onclick="openMap()">
+                            <i class="fas fa-external-link-alt me-2"></i>Open in Maps
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea class="form-control" id="message" rows="5" placeholder="Your Message"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Send Message</button>
-            </form>
+            </div>
         </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- jQuery -->
-    <script src="Forex.js"></script> <!-- Link to your JavaScript file -->
+    <!-- Success Message Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <h4>Message Sent Successfully!</h4>
+        <p>Thank you for contacting ForexPro. We'll get back to you within 24 hours.</p>
+        <button class="btn btn-primary" onclick="closeSuccessMessage()">
+            <i class="fas fa-times me-2"></i>Close
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Form validation and submission
+        $(document).ready(function() {
+            // Initialize tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Form submission handler
+            $('#contact-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    inquiryType: $('#inquiry-type').val(),
+                    subject: $('#subject').val(),
+                    message: $('#message').val(),
+                    newsletter: $('#newsletter').is(':checked')
+                };
+
+                // Validate form
+                if (validateForm(formData)) {
+                    submitForm(formData);
+                }
+            });
+
+            // Real-time validation
+            $('.form-control').on('blur', function() {
+                validateField($(this));
+            });
+
+            // Character counter for message
+            $('#message').on('input', function() {
+                const maxLength = 500;
+                const currentLength = $(this).val().length;
+                const remaining = maxLength - currentLength;
+                
+                // Remove existing counter
+                $(this).siblings('.char-counter').remove();
+                
+                // Add counter
+                const counterClass = remaining < 50 ? 'text-warning' : remaining < 20 ? 'text-danger' : 'text-muted';
+                $(this).after(`<small class="char-counter ${counterClass}">${remaining} characters remaining</small>`);
+            });
+
+            // Auto-resize textarea
+            $('#message').on('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        });
+
+        // Form validation function
+        function validateForm(data) {
+            let isValid = true;
+            const errors = [];
+
+            // Name validation
+            if (!data.name || data.name.trim().length < 2) {
+                errors.push('Please enter a valid name');
+                $('#name').addClass('is-invalid');
+                isValid = false;
+            } else {
+                $('#name').removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!data.email || !emailRegex.test(data.email)) {
+                errors.push('Please enter a valid email address');
+                $('#email').addClass('is-invalid');
+                isValid = false;
+            } else {
+                $('#email').removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Phone validation (optional but if provided, should be valid)
+            if (data.phone && data.phone.length > 0) {
+                const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+                if (!phoneRegex.test(data.phone.replace(/[\s\-\(\)]/g, ''))) {
+                    errors.push('Please enter a valid phone number');
+                    $('#phone').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#phone').removeClass('is-invalid').addClass('is-valid');
+                }
+            }
+
+            // Inquiry type validation
+            if (!data.inquiryType) {
+                errors.push('Please select an inquiry type');
+                $('#inquiry-type').addClass('is-invalid');
+                isValid = false;
+            } else {
+                $('#inquiry-type').removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Subject validation
+            if (!data.subject || data.subject.trim().length < 5) {
+                errors.push('Please enter a descriptive subject (minimum 5 characters)');
+                $('#subject').addClass('is-invalid');
+                isValid = false;
+            } else {
+                $('#subject').removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Message validation
+            if (!data.message || data.message.trim().length < 10) {
+                errors.push('Please enter a detailed message (minimum 10 characters)');
+                $('#message').addClass('is-invalid');
+                isValid = false;
+            } else {
+                $('#message').removeClass('is-invalid').addClass('is-valid');
+            }
+
+            // Show errors if any
+            if (!isValid) {
+                showNotification('Please correct the highlighted fields', 'error');
+            }
+
+            return isValid;
+        }
+
+        // Individual field validation
+        function validateField($field) {
+            const fieldId = $field.attr('id');
+            const value = $field.val();
+
+            $field.removeClass('is-invalid is-valid');
+
+            switch(fieldId) {
+                case 'name':
+                    if (value.trim().length >= 2) {
+                        $field.addClass('is-valid');
+                    }
+                    break;
+                case 'email':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (emailRegex.test(value)) {
+                        $field.addClass('is-valid');
+                    }
+                    break;
+                case 'phone':
+                    if (value.length === 0 || /^[\+]?[1-9][\d]{0,15}$/.test(value.replace(/[\s\-\(\)]/g, ''))) {
+                        $field.addClass('is-valid');
+                    }
+                    break;
+                case 'subject':
+                    if (value.trim().length >= 5) {
+                        $field.addClass('is-valid');
+                    }
+                    break;
+                case 'message':
+                    if (value.trim().length >= 10) {
+                        $field.addClass('is-valid');
+                    }
+                    break;
+            }
+        }
+
+        // Form submission with loading state
+        function submitForm(data) {
+            const submitBtn = $('.btn-submit');
+            const originalText = submitBtn.html();
+            
+            // Show loading state
+            submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Sending...').prop('disabled', true);
+            
+            // Simulate form submission (replace with actual API call)
+            setTimeout(() => {
+                // Reset button
+                submitBtn.html(originalText).prop('disabled', false);
+                
+                // Clear form
+                $('#contact-form')[0].reset();
+                $('.form-control').removeClass('is-valid is-invalid');
+                $('.char-counter').remove();
+                
+                // Show success message
+                showSuccessMessage();
+                
+                // Log form data (in real app, send to server)
+                console.log('Form submitted:', data);
+                
+            }, 2000);
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            $('#overlay').addClass('show');
+            $('#successMessage').addClass('show');
+            $('body').css('overflow', 'hidden');
+        }
+
+        // Close success message
+        function closeSuccessMessage() {
+            $('#overlay').removeClass('show');
+            $('#successMessage').removeClass('show');
+            $('body').css('overflow', 'auto');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const alertClass = type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info';
+            const iconClass = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
+            
+            const notification = $(`
+                <div class="alert alert-${alertClass} alert-dismissible fade show notification" role="alert">
+                    <i class="fas fa-${iconClass} me-2"></i>
+                    ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            `);
+
+            notification.css({
+                position: 'fixed',
+                top: '100px',
+                right: '20px',
+                zIndex: 9999,
+                minWidth: '300px',
+                maxWidth: '400px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+                borderRadius: '10px',
+                border: 'none'
+            });
+
+            $('body').append(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.alert('close');
+            }, 5000);
+        }
+
+        // Open map function
+        function openMap() {
+            // Replace with actual coordinates
+            const lat = -1.9441;  // Kigali latitude
+            const lng = 30.0619;  // Kigali longitude
+            const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+            window.open(url, '_blank');
+        }
+
+        // Contact item hover effects
+        $('.contact-item').hover(
+            function() {
+                $(this).find('.contact-icon').addClass('fa-bounce');
+            },
+            function() {
+                $(this).find('.contact-icon').removeClass('fa-bounce');
+            }
+        );
+
+        // Social links tracking
+        $('.social-link').on('click', function(e) {
+            e.preventDefault();
+            const platform = $(this).find('i').attr('class').split(' ')[1].replace('fa-', '');
+            showNotification(`Opening ${platform} page...`, 'info');
+            
+            // In real app, open actual social media links
+            setTimeout(() => {
+                // window.open('actual_social_media_url', '_blank');
+            }, 1000);
+        });
+
+        // Phone number click tracking
+        $('a[href^="tel:"]').on('click', function() {
+            const phoneNumber = $(this).attr('href').replace('tel:', '');
+            showNotification(`Calling ${phoneNumber}...`, 'info');
+        });
+
+        // Email click tracking
+        $('a[href^="mailto:"]').on('click', function() {
+            const email = $(this).attr('href').replace('mailto:', '');
+            showNotification(`Opening email client for ${email}...`, 'info');
+        });
+
+        // Smooth scrolling for any anchor links
+        $('a[href^="#"]').on('click', function(event) {
+            const target = $(this.getAttribute('href'));
+            if (target.length) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 80
+                }, 1000);
+            }
+        });
+
+        // Add ripple effect to buttons
+        $('.btn, .social-link, .contact-item').on('click', function(e) {
+            const $element = $(this);
+            const ripple = $('<span class="ripple"></span>');
+            
+            $element.append(ripple);
+            
+            const elementOffset = $element.offset();
+            const x = e.pageX - elementOffset.left;
+            const y = e.pageY - elementOffset.top;
+            
+            ripple.css({
+                position: 'absolute',
+                left: x,
+                top: y,
+                width: '1px',
+                height: '1px',
+                background: 'rgba(255,255,255,0.5)',
+                borderRadius: '50%',
+                transform: 'scale(0)',
+                animation: 'ripple 0.6s linear',
+                zIndex: 1,
+                pointerEvents: 'none'
+            });
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Add CSS for ripple animation
+        $('<style>')
+            .prop('type', 'text/css')
+            .html(`
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                .btn, .social-link, .contact-item {
+                    position: relative;
+                    overflow: hidden;
+                }
+                .notification {
+                    animation: slideInRight 0.5s ease-out;
+                }
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                .form-control.is-valid {
+                    border-color: #28a745;
+                    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+                }
+                .form-control.is-invalid {
+                    border-color: #dc3545;
+                    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+                }
+                .char-counter {
+                    display: block;
+                    margin-top: 0.25rem;
+                    font-size: 0.875rem;
+                }
+            `)
+            .appendTo('head');
+
+        // Close success message when clicking overlay
+        $('#overlay').on('click', function() {
+            closeSuccessMessage();
+        });
+
+        // Keyboard shortcuts
+        $(document).keydown(function(e) {
+            // Escape key to close success message
+            if (e.keyCode === 27 && $('#successMessage').hasClass('show')) {
+                closeSuccessMessage();
+            }
+        });
+
+        // Auto-focus first field when page loads
+        $(window).on('load', function() {
+            setTimeout(() => {
+                $('#name').focus();
+            }, 1000);
+        });
+    </script>
 </body>
+
 </html>

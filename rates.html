@@ -4,91 +4,1140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forex Bureau - Exchange Rates</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap -->
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-   <style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-}
+    <title>ForexPro - Live Exchange Rates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.navbar {
-    margin-bottom: 20px;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
 
-h1 {
-    font-size: 2.5rem;
-    color: #343a40;
-}
+        /* Custom Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
 
-.table {
-    background-color: #ffffff;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-.table th {
-    background-color: #007bff;
-    color: #ffffff;
-}
+        .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            color: white !important;
+        }
 
-.table td, .table th {
-    text-align: center;
-}
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
 
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2rem;
-    }
-}
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-   </style> 
+        /* Page Header */
+        .page-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Live Indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            margin: 1rem 0;
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control, .form-control:focus {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* Rates Table Container */
+        .rates-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        /* Enhanced Table */
+        .rates-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: none;
+        }
+
+        .rates-table thead th {
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 1.5rem 1rem;
+            border: none;
+            position: relative;
+        }
+
+        .rates-table tbody tr {
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .rates-table tbody tr:hover {
+            background: rgba(0, 123, 255, 0.05);
+            transform: scale(1.01);
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.1);
+        }
+
+        .rates-table td {
+            padding: 1.5rem 1rem;
+            vertical-align: middle;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Currency Row Styling */
+        .currency-row {
+            position: relative;
+        }
+
+        .currency-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .currency-flag {
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .currency-details h6 {
+            margin: 0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .currency-details small {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Rate Display */
+        .rate-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rate-change {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .rate-change.positive {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .rate-change.negative {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .rate-change.neutral {
+            background: rgba(108, 117, 125, 0.1);
+            color: #6c757d;
+        }
+
+        /* Chart Icon */
+        .chart-icon {
+            color: #007bff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chart-icon:hover {
+            color: #0056b3;
+            transform: scale(1.2);
+        }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Search and Filter */
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .search-box input {
+            padding-left: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .currency-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+            
+            .rates-table td {
+                padding: 1rem 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .rate-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Trend Indicators */
+        .trend-up {
+            color: #28a745;
+        }
+
+        .trend-down {
+            color: #dc3545;
+        }
+
+        .trend-neutral {
+            color: #6c757d;
+        }
+
+        /* Last Updated */
+        .last-updated {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Forex Bureau</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="exchange.html">Service</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="rates.html"> Rates</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <i class="fas fa-exchange-alt me-2"></i>ForexPro
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="exchange.html">Services</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="rates.html">Rates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h1 class="text-center">Current Exchange Rates</h1>
-        <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">Currency</th>
-                    <th scope="col">Rate</th>
-                </tr>
-            </thead>
-            <tbody id="rates-table-body">
-                <!-- Rates will be populated here by JavaScript -->
-            </tbody>
-        </table>
+    <!-- Page Header -->
+    <div class="container mt-5 pt-4">
+        <div class="page-header fade-in">
+            <h1><i class="fas fa-chart-line me-3"></i>Live Exchange Rates</h1>
+            <p>Real-time currency exchange rates updated every second from global financial markets</p>
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>Live Rates</span>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="stat-value" id="totalCurrencies">150+</div>
+                <div class="stat-label">Currencies Available</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value" id="updateFrequency">1s</div>
+                <div class="stat-label">Update Frequency</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-value" id="marketsCovered">200+</div>
+                <div class="stat-label">Markets Covered</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-value">99.9%</div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section fade-in">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="filter-card">
+                        <label class="font-weight-bold mb-2">
+                            <i class="fas fa-search me-2"></i>Search Currency
+                        </label>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" id="searchCurrency" placeholder="Search by name or code...">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="filter-card">
+                        <label class="font-weight-bold mb-2">
+                            <i class="fas fa-filter me-2"></i>Filter by Region
+                        </label>
+                        <select class="form-control" id="regionFilter">
+                            <option value="">All Regions</option>
+                            <option value="major">Major Currencies</option>
+                            <option value="europe">European</option>
+                            <option value="asia">Asian</option>
+                            <option value="americas">Americas</option>
+                            <option value="africa">African</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="filter-card">
+                        <label class="font-weight-bold mb-2">
+                            <i class="fas fa-sort me-2"></i>Sort by
+                        </label>
+                        <select class="form-control" id="sortFilter">
+                            <option value="name">Currency Name</option>
+                            <option value="rate">Exchange Rate</option>
+                            <option value="change">Rate Change</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="#" class="action-btn" onclick="refreshRates()">
+                <i class="fas fa-sync-alt me-2"></i>Refresh Rates
+            </a>
+            <a href="#calculator" class="action-btn">
+                <i class="fas fa-calculator me-2"></i>Currency Calculator
+            </a>
+            <a href="#" class="action-btn" onclick="exportRates()">
+                <i class="fas fa-download me-2"></i>Export Rates
+            </a>
+        </div>
+
+        <!-- Rates Container -->
+        <div class="rates-container">
+            <!-- Loading Animation -->
+            <div id="loadingIndicator" class="loading">
+                <div class="spinner"></div>
+                <p>Loading latest exchange rates...</p>
+            </div>
+
+            <!-- Exchange Rates Table -->
+            <div id="ratesTableContainer" style="display: none;">
+                <table class="table rates-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-flag me-2"></i>Currency</th>
+                            <th><i class="fas fa-dollar-sign me-2"></i>Buy Rate</th>
+                            <th><i class="fas fa-coins me-2"></i>Sell Rate</th>
+                            <th><i class="fas fa-chart-line me-2"></i>Change (24h)</th>
+                            <th><i class="fas fa-clock me-2"></i>Updated</th>
+                            <th><i class="fas fa-cog me-2"></i>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rates-table-body">
+                        <!-- Rates will be populated here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Last Updated Info -->
+            <div class="last-updated">
+                <i class="fas fa-clock me-2"></i>
+                Last updated: <span id="lastUpdateTime">Just now</span>
+                <span class="mx-3">|</span>
+                <i class="fas fa-database me-2"></i>
+                Data source: Global Financial Markets
+            </div>
+        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- jQuery for AJAX -->
-    <script src="rates.js"></script> <!-- Link to your JavaScript file -->
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Mock exchange rate data with additional details
+        const mockRatesData = [
+            {
+                code: 'USD',
+                name: 'US Dollar',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFFFF, #0000FF)',
+                buyRate: 1.0000,
+                sellRate: 1.0000,
+                change: 0.0000,
+                region: 'major',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'EUR',
+                name: 'Euro',
+                flag: 'linear-gradient(45deg, #003399, #FFCC00)',
+                buyRate: 0.8234,
+                sellRate: 0.8256,
+                change: 0.0023,
+                region: 'major',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'GBP',
+                name: 'British Pound',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFFFF, #0000FF)',
+                buyRate: 0.7899,
+                sellRate: 0.7923,
+                change: -0.0012,
+                region: 'major',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'JPY',
+                name: 'Japanese Yen',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFFFF)',
+                buyRate: 149.23,
+                sellRate: 149.67,
+                change: 0.45,
+                region: 'asia',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'CAD',
+                name: 'Canadian Dollar',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFFFF, #FF0000)',
+                buyRate: 1.3567,
+                sellRate: 1.3589,
+                change: -0.0034,
+                region: 'americas',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'AUD',
+                name: 'Australian Dollar',
+                flag: 'linear-gradient(45deg, #0000FF, #FF0000)',
+                buyRate: 1.5234,
+                sellRate: 1.5267,
+                change: 0.0089,
+                region: 'major',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'CHF',
+                name: 'Swiss Franc',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFFFF)',
+                buyRate: 0.9123,
+                sellRate: 0.9145,
+                change: 0.0012,
+                region: 'europe',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'CNY',
+                name: 'Chinese Yuan',
+                flag: 'linear-gradient(45deg, #FF0000, #FFFF00)',
+                buyRate: 7.2456,
+                sellRate: 7.2589,
+                change: -0.0234,
+                region: 'asia',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'RWF',
+                name: 'Rwandan Franc',
+                flag: 'linear-gradient(45deg, #0000FF, #FFFF00, #00FF00)',
+                buyRate: 1234.56,
+                sellRate: 1245.78,
+                change: 5.67,
+                region: 'africa',
+                lastUpdated: new Date()
+            },
+            {
+                code: 'KES',
+                name: 'Kenyan Shilling',
+                flag: 'linear-gradient(45deg, #000000, #FF0000, #00FF00)',
+                buyRate: 149.85,
+                sellRate: 151.23,
+                change: -2.34,
+                region: 'africa',
+                lastUpdated: new Date()
+            }
+        ];
+
+        let currentRates = [...mockRatesData];
+        let filteredRates = [...mockRatesData];
+
+        // Initialize page
+        $(document).ready(function() {
+            setTimeout(() => {
+                loadRates();
+                startRealTimeUpdates();
+            }, 1500);
+
+            // Event listeners
+            $('#searchCurrency').on('input', filterRates);
+            $('#regionFilter').on('change', filterRates);
+            $('#sortFilter').on('change', sortRates);
+        });
+
+        // Load rates into table
+        function loadRates() {
+            $('#loadingIndicator').hide();
+            $('#ratesTableContainer').show();
+            displayRates(filteredRates);
+            updateLastUpdatedTime();
+        }
+
+        // Display rates in table
+        function displayRates(rates) {
+            const tbody = $('#rates-table-body');
+            tbody.empty();
+
+            rates.forEach((rate, index) => {
+                const changeClass = rate.change > 0 ? 'positive' : rate.change < 0 ? 'negative' : 'neutral';
+                const changeIcon = rate.change > 0 ? 'fa-arrow-up' : rate.change < 0 ? 'fa-arrow-down' : 'fa-minus';
+                const trendClass = rate.change > 0 ? 'trend-up' : rate.change < 0 ? 'trend-down' : 'trend-neutral';
+
+                const row = `
+                    <tr class="currency-row fade-in" style="animation-delay: ${index * 0.1}s">
+                        <td>
+                            <div class="currency-info">
+                                <div class="currency-flag" style="background: ${rate.flag};">
+                                    ${rate.code.substring(0, 2)}
+                                </div>
+                                <div class="currency-details">
+                                    <h6>${rate.code}</h6>
+                                    <small>${rate.name}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="rate-value">${rate.buyRate.toFixed(4)}</span>
+                        </td>
+                        <td>
+                            <span class="rate-value">${rate.sellRate.toFixed(4)}</span>
+                        </td>
+                        <td>
+                            <span class="rate-change ${changeClass}">
+                                <i class="fas ${changeIcon} me-1"></i>
+                                ${rate.change > 0 ? '+' : ''}${rate.change.toFixed(4)}
+                            </span>
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                ${rate.lastUpdated.toLocaleTimeString()}
+                            </small>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="viewChart('${rate.code}')" title="View Chart">
+                                <i class="fas fa-chart-area"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-success" onclick="quickExchange('${rate.code}')" title="Quick Exchange">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.append(row);
+            });
+        }
+
+        // Filter rates based on search and region
+        function filterRates() {
+            const searchTerm = $('#searchCurrency').val().toLowerCase();
+            const selectedRegion = $('#regionFilter').val();
+
+            filteredRates = currentRates.filter(rate => {
+                const matchesSearch = rate.name.toLowerCase().includes(searchTerm) || 
+                                    rate.code.toLowerCase().includes(searchTerm);
+                const matchesRegion = !selectedRegion || rate.region === selectedRegion;
+                
+                return matchesSearch && matchesRegion;
+            });
+
+            sortRates();
+        }
+
+        // Sort rates
+        function sortRates() {
+            const sortBy = $('#sortFilter').val();
+            
+            filteredRates.sort((a, b) => {
+                switch(sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'rate':
+                        return b.buyRate - a.buyRate;
+                    case 'change':
+                        return Math.abs(b.change) - Math.abs(a.change);
+                    default:
+                        return 0;
+                }
+            });
+
+            displayRates(filteredRates);
+        }
+
+        // Start real-time updates
+        function startRealTimeUpdates() {
+            setInterval(() => {
+                updateRates();
+                updateLastUpdatedTime();
+            }, 5000); // Update every 5 seconds
+        }
+
+        // Simulate rate updates
+        function updateRates() {
+            currentRates.forEach(rate => {
+                // Simulate small random changes
+                const changeAmount = (Math.random() - 0.5) * 0.01;
+                rate.change = changeAmount;
+                rate.buyRate += changeAmount;
+                rate.sellRate += changeAmount;
+                rate.lastUpdated = new Date();
+            });
+
+            filterRates(); // Re-apply filters and update display
+        }
+
+        // Update last updated time
+        function updateLastUpdatedTime() {
+            const now = new Date();
+            $('#lastUpdateTime').text(now.toLocaleTimeString());
+        }
+
+        // Refresh rates manually
+        function refreshRates() {
+            $('#loadingIndicator').show();
+            $('#ratesTableContainer').hide();
+            
+            // Show loading for 1 second
+            setTimeout(() => {
+                updateRates();
+                $('#loadingIndicator').hide();
+                $('#ratesTableContainer').show();
+                
+                // Show success notification
+                showNotification('Rates refreshed successfully!', 'success');
+            }, 1000);
+        }
+
+        // View chart for specific currency
+        function viewChart(currencyCode) {
+            showNotification(`Chart for ${currencyCode} will open in a new window`, 'info');
+            // In a real application, this would open a chart modal or new page
+        }
+
+        // Quick exchange for specific currency
+        function quickExchange(currencyCode) {
+            showNotification(`Quick exchange for ${currencyCode} - redirecting to calculator`, 'info');
+            // In a real application, this would open exchange form or redirect
+            setTimeout(() => {
+                window.location.href = '#calculator';
+            }, 1000);
+        }
+
+        // Export rates functionality
+        function exportRates() {
+            const csvContent = generateCSV(filteredRates);
+            downloadCSV(csvContent, 'forex_rates.csv');
+            showNotification('Rates exported successfully!', 'success');
+        }
+
+        // Generate CSV content
+        function generateCSV(rates) {
+            const headers = ['Currency Code', 'Currency Name', 'Buy Rate', 'Sell Rate', 'Change (24h)', 'Last Updated'];
+            const rows = rates.map(rate => [
+                rate.code,
+                rate.name,
+                rate.buyRate.toFixed(4),
+                rate.sellRate.toFixed(4),
+                rate.change.toFixed(4),
+                rate.lastUpdated.toLocaleString()
+            ]);
+
+            return [headers, ...rows].map(row => row.join(',')).join('\n');
+        }
+
+        // Download CSV file
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = $(`
+                <div class="alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show notification" role="alert">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            `);
+
+            // Add notification styles
+            notification.css({
+                position: 'fixed',
+                top: '100px',
+                right: '20px',
+                zIndex: 9999,
+                minWidth: '300px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+                borderRadius: '10px',
+                border: 'none'
+            });
+
+            $('body').append(notification);
+
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                notification.alert('close');
+            }, 4000);
+        }
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function(event) {
+            const target = $(this.getAttribute('href'));
+            if (target.length) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 80
+                }, 1000);
+            }
+        });
+
+        // Add some interactive effects
+        $(document).on('mouseenter', '.currency-row', function() {
+            $(this).find('.chart-icon').addClass('fa-pulse');
+        });
+
+        $(document).on('mouseleave', '.currency-row', function() {
+            $(this).find('.chart-icon').removeClass('fa-pulse');
+        });
+
+        // Keyboard shortcuts
+        $(document).keydown(function(e) {
+            // Ctrl + R to refresh rates
+            if (e.ctrlKey && e.keyCode === 82) {
+                e.preventDefault();
+                refreshRates();
+            }
+            
+            // Ctrl + F to focus search
+            if (e.ctrlKey && e.keyCode === 70) {
+                e.preventDefault();
+                $('#searchCurrency').focus();
+            }
+        });
+
+        // Add ripple effect to buttons
+        $('.action-btn, .btn').on('click', function(e) {
+            const $btn = $(this);
+            const ripple = $('<span class="ripple"></span>');
+            
+            $btn.append(ripple);
+            
+            const btnOffset = $btn.offset();
+            const x = e.pageX - btnOffset.left;
+            const y = e.pageY - btnOffset.top;
+            
+            ripple.css({
+                position: 'absolute',
+                left: x,
+                top: y,
+                width: '1px',
+                height: '1px',
+                background: 'rgba(255,255,255,0.5)',
+                borderRadius: '50%',
+                transform: 'scale(0)',
+                animation: 'ripple 0.6s linear',
+                zIndex: 1
+            });
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Add CSS for button ripple animation
+        $('<style>')
+            .prop('type', 'text/css')
+            .html(`
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                .btn, .action-btn {
+                    position: relative;
+                    overflow: hidden;
+                }
+                .notification {
+                    animation: slideInRight 0.5s ease-out;
+                }
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `)
+            .appendTo('head');
+
+        // Add market status indicator
+        function updateMarketStatus() {
+            const now = new Date();
+            const hour = now.getHours();
+            const day = now.getDay();
+            
+            // Simple market hours logic (weekdays 9 AM - 5 PM)
+            const isMarketOpen = day >= 1 && day <= 5 && hour >= 9 && hour < 17;
+            
+            const statusHtml = `
+                <div class="market-status ${isMarketOpen ? 'open' : 'closed'}" style="
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 0.5rem 1rem;
+                    border-radius: 20px;
+                    margin-left: 1rem;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    ${isMarketOpen ? 
+                        'background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid #28a745;' : 
+                        'background: rgba(220, 53, 69, 0.1); color: #dc3545; border: 1px solid #dc3545;'
+                    }
+                ">
+                    <div class="status-dot" style="
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        margin-right: 0.5rem;
+                        background: ${isMarketOpen ? '#28a745' : '#dc3545'};
+                        ${isMarketOpen ? 'animation: pulse 2s infinite;' : ''}
+                    "></div>
+                    Market ${isMarketOpen ? 'Open' : 'Closed'}
+                </div>
+            `;
+            
+            $('.live-indicator').after(statusHtml);
+        }
+
+        // Initialize market status
+        setTimeout(() => {
+            updateMarketStatus();
+        }, 2000);
+
+        // Add tooltip functionality
+        $('[title]').tooltip();
+    </script>
 </body>
 
 </html>
