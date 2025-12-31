@@ -651,6 +651,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
         // Mock exchange rate data with additional details
@@ -916,17 +917,73 @@
         }
 
         // View chart for specific currency
+        let ratesChart = null;
         function viewChart(currencyCode) {
-            showNotification(`Chart for ${currencyCode} will open in a new window`, 'info');
-            // In a real application, this would open a chart modal or new page
+            // Find the currency from the current list or the mock data
+            const rateObj = (typeof currentRates !== 'undefined' ? currentRates : mockRatesData).find(r => r.code === currencyCode) || mockRatesData.find(r => r.code === currencyCode);
+            const baseRate = rateObj ? ((rateObj.buyRate + rateObj.sellRate) / 2) : 1;
+
+            // Generate synthetic historical data (30 points, 1-min intervals)
+            const points = 30;
+            const labels = [];
+            const data = [];
+            let value = baseRate;
+
+            for (let i = points - 1; i >= 0; i--) {
+                const d = new Date(Date.now() - i * 60000); // go back by minutes
+                labels.push(d.toLocaleTimeString());
+                // small random walk around baseRate
+                const change = (Math.random() - 0.5) * 0.004 * baseRate;
+                value = Math.max(0, value + change);
+                data.push(parseFloat(value.toFixed(4)));
+            }
+
+            // Update modal title
+            $('#chartModalTitle').text(`${currencyCode} - Rate Chart`);
+
+            // Render Chart.js chart
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            if (ratesChart) {
+                ratesChart.destroy();
+            }
+
+            ratesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${currencyCode} Rate`,
+                        data: data,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0,123,255,0.08)',
+                        pointRadius: 2,
+                        fill: true,
+                        tension: 0.25
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { display: true },
+                        y: { beginAtZero: false }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+
+            // Show modal
+            $('#chartModal').modal('show');
         }
 
         // Quick exchange for specific currency
         function quickExchange(currencyCode) {
             showNotification(`Quick exchange for ${currencyCode} - redirecting to calculator`, 'info');
-            // In a real application, this would open exchange form or redirect
+            // Redirect to calculator section on the home page
             setTimeout(() => {
-                window.location.href = '#calculator';
+                window.location.href = 'index.html#calculator';
             }, 1000);
         }
 
@@ -1138,6 +1195,26 @@
         // Add tooltip functionality
         $('[title]').tooltip();
     </script>
+
+    <!-- Chart Modal -->
+    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="chartModalTitle">Currency Chart</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <canvas id="chartCanvas" style="width:100%;height:320px;"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>
